@@ -1,26 +1,20 @@
 <template>
   <v-app id="an">
-     <router-view/>
+    <router-view />
   </v-app>
-  
 </template>
 
 <script>
-export default {
-  
+// import Background from "./components/Background.vue";
 
+export default {
   name: "App",
 
-  components: {
-    
-  },
+  components: {},
 
   data: () => ({
     //
   }),
 };
 </script>
-<style scoped>
-
-
-</style>
+<style scoped></style>

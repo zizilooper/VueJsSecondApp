@@ -1,70 +1,89 @@
 <template class="v-application--wrap">
   <v-container class="cards">
-    <div class="card1" v-show="isShow">
-      <form @submit.prevent="onSubmit" @submit="login">
-        <v-text-field v-model="email" required label="E-mail"></v-text-field>
+    <div>
+      <div class="card1" v-show="isShow">
+        <form @submit.prevent="onSubmit" @submit="login">
+          <v-text-field v-model="email" required label="E-mail"></v-text-field>
+          <v-text-field
+            v-model="password"
+            :counter="10"
+            label="password"
+            type="password"
+            required
+          ></v-text-field>
 
-        <v-text-field
-          v-model="password"
-          :counter="10"
-          label="password"
-          type="password"
-          required
-        ></v-text-field>
+          <v-btn class="bttn" type="submit">submit</v-btn>
+        </form>
+      </div>
+      <div v-show="isShow" class="sideView">
+        <v-img
+          with="300"
+          height="320"
+          :src="require('@/assets/image/images9.png')"
+          class="img"
+        />
+        <v-btn id="btnn" @click="change">
+          registr
+        </v-btn>
+      </div>
+      <div v-show="!isShow" class="sideView">
+        <v-img
+          with="300"
+          height="320"
+          :src="require('@/assets/image/images3.png')"
+          class="img"
+        />
+        <v-btn id="btnn" @click="change">
+          login
+        </v-btn>
+      </div>
 
-        <v-btn class="bttn" type="submit">submit</v-btn>
-      </form>
+      <div class="card2" v-show="!isShow">
+        <form @submit.prevent="onSubmit" @submit="registraion">
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            label="Name"
+            required
+          ></v-text-field>
+
+          <v-text-field v-model="email" label="E-mail" required></v-text-field>
+
+          <v-text-field
+            v-model="password"
+            :counter="10"
+            type="password"
+            label="password"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="retyPassword"
+            :counter="10"
+            label="Rety password"
+            type="password"
+            required
+          ></v-text-field>
+
+          <v-btn class="bttn" type="submit">submit</v-btn>
+        </form>
+      </div>
     </div>
-    <div v-show="isShow" class="sideView">
-      <v-img with="300" height="320" :src="require('@/assets/image/images9.png')" class="img" />
-      <v-btn id="btnn" @click="change">
-        registr
-      </v-btn>
-    </div>
-    <div v-show="!isShow" class="sideView">
-      <v-img  with="300" height="320" :src="require('@/assets/image/images3.png')" class="img" />
-      <v-btn id="btnn" @click="change">
-        login
-      </v-btn>
-    </div>
-
-    <div class="card2" v-show="!isShow">
-      <form @submit.prevent="onSubmit" @submit="registraion">
-        <v-text-field
-          v-model="name"
-          :counter="10"
-          label="Name"
-          required
-        ></v-text-field>
-
-        <v-text-field v-model="email" label="E-mail" required></v-text-field>
-
-        <v-text-field
-          v-model="password"
-          :counter="10"
-          type="password"
-          label="password"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="retyPassword"
-          :counter="10"
-          label="Rety password"
-          type="password"
-          required
-        ></v-text-field>
-
-        <v-btn class="bttn" type="submit">submit</v-btn>
-      </form>
+    <div class="card3">
+      <Visit :users="counter"
+      :loginN="loginData" />
     </div>
   </v-container>
 </template>
 
 <script>
+import Visit from "../components/Visit.vue";
+
 export default {
   name: "Home",
-  components: {},
+  components: {
+    Visit,
+  },
   data: () => ({
     email: "",
     name: "",
@@ -73,6 +92,7 @@ export default {
     isShow: true,
     loginData: [],
     registrationData: [],
+    counter: 0,
   }),
   methods: {
     onSubmit() {
@@ -81,6 +101,7 @@ export default {
     login() {
       this.loginData.push(this.email, this.password);
       console.log("login", this.loginData);
+      this.counter += 1;
     },
     registraion() {
       this.registrationData.push(
@@ -91,6 +112,7 @@ export default {
       );
 
       console.log("register", this.registrationData);
+      this.counter += 1;
     },
 
     change() {
@@ -109,8 +131,7 @@ export default {
   background: #00bf8f;
   background: -webkit-linear-gradient(to right, #001510, #00bf8f);
   background: linear-gradient(to right, #001510, #00bf8f);
-  font-family: Georgia, 'Times New Roman', Times, serif;
-
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 .cards {
   width: 100%;
@@ -136,17 +157,24 @@ export default {
   background-color: #f1b92b;
   border-radius: 20px 5px;
 }
+.card3 {
+  height: 120px;
+  float: left;
+  padding: 40px;
+  margin: 3px;
+  background-color: #f1b92b;
+  border-radius: 20px 5px;
+}
 #btnn {
   border-radius: 100px;
   width: 100px;
   background-color: #f8cc06;
   color: aliceblue;
-  padding: 10px; 
+  padding: 10px;
   margin-top: 25px;
   margin-left: 15px;
-  
-  font-family: Georgia, 'Times New Roman', Times, serif;
 
+  font-family: Georgia, "Times New Roman", Times, serif;
 }
 
 #btnn:hover {
@@ -162,7 +190,7 @@ export default {
   margin-top: 2px;
   background-color: #d9f1d7;
   /* background: url("@/assets/image/download.png"); */
-  border-radius: 20px 0px 0px 20px ;
+  border-radius: 20px 0px 0px 20px;
 }
 
 .img {
@@ -170,9 +198,8 @@ export default {
   height: 300px;
 }
 
-button.bttn.v-btn.v-btn.v-btn--contained.theme--light.v-size--default{
+button.bttn.v-btn.v-btn.v-btn--contained.theme--light.v-size--default {
   background-color: #007474;
-  border-radius: 20px 20px ;
-
+  border-radius: 20px 20px;
 }
 </style>
